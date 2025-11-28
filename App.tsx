@@ -230,6 +230,13 @@ export default function App() {
         }
 
         try {
+            // Show "Generating seed" suspense
+            setIsOpening(true);
+            setView({ page: 'OPENING' });
+
+            // Add 1.5 second delay for suspense
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
             // 1. Generate Outcome (Provably Fair)
             const result = await generateOutcome(selectedBox.items, user.clientSeed, user.nonce);
             console.log('🎲 Generated outcome:', result.item.name, '| Value:', result.item.value, '| Random:', result.randomValue);
@@ -271,12 +278,12 @@ export default function App() {
 
             // 5. Set result with pre-generated reel
             setRollResult({ ...result, preGeneratedReel: reelItems });
-            setView({ page: 'OPENING' });
-            setIsOpening(true);
 
         } catch (error) {
             console.error("Open Box Error:", error);
             alert("Failed to open box. Please try again.");
+            setIsOpening(false);
+            setView({ page: 'BOX_DETAIL' });
         }
     };
 
@@ -592,7 +599,7 @@ export default function App() {
                                                 ENTER PVP ARENA
                                             </button>
 
-                                            {!user?.freeBoxClaimed && (
+                                            {!user && (
                                                 <button
                                                     onClick={() => handleLogin(true)} // Trigger Welcome Spin
                                                     className="bg-white hover:bg-slate-200 text-black px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-white/20 flex items-center justify-center gap-2"
@@ -698,16 +705,6 @@ export default function App() {
                                     <div className="bg-[#131b2e] rounded-3xl p-8 border border-white/5 relative overflow-hidden text-center group shadow-2xl">
                                         <div className={`absolute inset-0 bg-gradient-to-br ${selectedBox.color} opacity-10`}></div>
                                         <div className={`absolute inset-0 blur-3xl opacity-20 bg-gradient-to-br ${selectedBox.color}`}></div>
-
-                                        <button
-                                            onClick={handleReskinBox}
-                                            disabled={isReskinning}
-                                            className="absolute top-4 right-4 z-30 bg-black/40 hover:bg-black/60 text-white p-2 rounded-lg backdrop-blur-md transition-all border border-white/10"
-                                            title="Use AI to Generate Unique Box Art"
-                                        >
-                                            {isReskinning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Paintbrush className="w-4 h-4" />}
-                                            {isReskinning && <span className="text-[10px] ml-2">Designing...</span>}
-                                        </button>
 
                                         <div className="relative w-64 h-64 mx-auto mb-6 z-10">
                                             <img src={selectedBox.image} className="w-full h-full object-cover rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-[float_4s_ease-in-out_infinite]" />

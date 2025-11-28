@@ -119,9 +119,17 @@ export const OpeningStage: React.FC<OpeningStageProps> = ({ box, winner, onBack,
           <span className="font-bold">EXIT</span>
         </button>
         <div className="font-display font-bold text-xl tracking-widest text-purple-500 uppercase">{box.name}</div>
-        <button className="text-slate-400 hover:text-white">
-          <Volume2 className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={onComplete}
+            className="text-xs font-bold bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded text-white transition-colors"
+          >
+            SKIP
+          </button>
+          <button className="text-slate-400 hover:text-white">
+            <Volume2 className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* Main Stage */}

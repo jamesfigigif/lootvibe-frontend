@@ -149,14 +149,14 @@ export const LiveSidebar = () => {
                             style={{ borderLeftColor: rarity === Rarity.LEGENDARY ? '#eab308' : rarity === Rarity.EPIC ? '#f43f5e' : rarity === Rarity.RARE ? '#a855f7' : rarity === Rarity.UNCOMMON ? '#3b82f6' : '#64748b' }}
                         >
                             {/* Item Image */}
-                            <div className="w-12 h-12 rounded-lg bg-[#0b0f19] border border-white/5 p-1 relative overflow-hidden flex-shrink-0">
-                                <div className={`absolute inset-0 opacity-10 ${rarity === Rarity.LEGENDARY ? 'bg-yellow-500' : 'bg-slate-500'}`}></div>
-                                <img src={drop.item_image} alt={drop.item_name} className="w-full h-full object-contain" />
+                            <div className="w-14 h-14 rounded-lg bg-[#0b0f19] border border-white/5 p-1 relative overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform">
+                                <div className={`absolute inset-0 opacity-20 ${rarity === Rarity.LEGENDARY ? 'bg-yellow-500' : 'bg-slate-500'}`}></div>
+                                <img src={drop.item_image} alt={drop.item_name} className="w-full h-full object-contain relative z-10" />
                             </div>
 
                             {/* Info */}
-                            <div className="flex-1 min-w-0 pr-12">
-                                <div className={`text-xs font-bold truncate ${rarity === Rarity.LEGENDARY ? 'text-yellow-400 drop-shadow-sm' : 'text-slate-200'}`}>
+                            <div className="flex-1 min-w-0 pr-2">
+                                <div className={`text-sm font-bold truncate ${rarity === Rarity.LEGENDARY ? 'text-yellow-400 drop-shadow-sm' : 'text-slate-200'}`}>
                                     {drop.item_name}
                                 </div>
                                 <div className="text-[10px] text-slate-500 truncate mb-1">{drop.box_name}</div>

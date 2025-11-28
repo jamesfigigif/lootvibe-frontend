@@ -222,15 +222,16 @@ export default function App() {
     };
 
     const handleOpenBox = async () => {
-        if (!user) {
-            handleLogin(false);
+        if (!selectedBox || !user) {
+            if (!user) handleLogin(false);
             return;
         }
-        if (!selectedBox) return;
 
-        const price = selectedBox.salePrice || selectedBox.price;
+        // Ensure we are NOT in demo mode for a real opening
+        setIsDemoMode(false);
 
-        if (user.balance < price) {
+        const cost = selectedBox.salePrice || selectedBox.price;
+        if (user.balance < cost) {
             setShowDeposit(true);
             return;
         }
@@ -898,7 +899,10 @@ export default function App() {
                             key={rollResult?.randomValue || Date.now()} // Force new instance per opening
                             box={selectedBox}
                             winner={rollResult?.item || null}
-                            onBack={() => setView({ page: 'BOX_DETAIL' })}
+                            onBack={() => {
+                                setView({ page: 'BOX_DETAIL' });
+                                setIsDemoMode(false);
+                            }}
                             onComplete={handleAnimationComplete}
                             isOpening={isOpening}
                             rollResult={rollResult}
